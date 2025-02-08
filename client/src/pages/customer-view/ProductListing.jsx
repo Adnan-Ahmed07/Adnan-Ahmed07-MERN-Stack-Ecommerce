@@ -1,11 +1,28 @@
 import ProductFilter from "@/components/customer-view/filter";
+import CustomerProductTile from "@/components/customer-view/product-tile";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
+import { fetchAllFilteredProducts } from "@/store/customer/products-slice";
 import { ArrowUpDownIcon } from "lucide-react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const ProductListing = () => {
+  const dispatch = useDispatch();
+  const { productList, productDetails } = useSelector(
+    (state) => state.customerProducts);
+    useEffect(() => {
+     
+        dispatch(
+
+
+          fetchAllFilteredProducts()
+        );
+        console.log("sanut");
+    }, [dispatch]);
+    console.log(productList,"fakakn");
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
       <ProductFilter/>
@@ -42,6 +59,17 @@ const ProductListing = () => {
               </DropdownMenu>
             </div>
           
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+        {productList && productList.length > 0
+            ? productList.map(productItem => 
+                <CustomerProductTile
+                 
+                  product={productItem}
+                  
+                />)
+              
+            : null}
         </div>
       </div>
     </div>
