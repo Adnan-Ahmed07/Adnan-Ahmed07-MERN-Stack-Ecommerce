@@ -1,46 +1,82 @@
-import { HousePlug, Menu, ShoppingCart } from "lucide-react";
+import { HousePlug, Menu,ShoppingCart,UserCheck,LogOut} from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { shoppingViewHeaderMenuItems } from "@/config";
 import { Label } from "../ui/label";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { logoutUser } from "@/store/auth-slice";
 
-
-const MenuItems=()=> {
+const MenuItems = () => {
   return (
     <nav className="flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row">
       {shoppingViewHeaderMenuItems.map((menuItem) => (
-        <Label
-          onClick={() => handleNavigate(menuItem)}
+        <Link
           className="text-sm font-medium cursor-pointer"
-          key={menuItem.id}
+        key={menuItem.id}
+        to={menuItem.path}
+        
+          
         >
           {menuItem.label}
-        </Label>
+        </Link>
       ))}
     </nav>
   );
+};
+const HeaderRightContent = () => {
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-}
-const HeaderRightContent=()=> {
+  function handleLogout() {
+    dispatch(logoutUser());
+  }
   return (
-<div className="flex lg:items-center lg:flex-row flex-col gap-4">
-     
+    <div className="flex lg:items-center lg:flex-row flex-col gap-4">
+      <Button variant="outline" size="icon">
+        <ShoppingCart className="w-6 h-6" />
+        <span className="sr-only">User cart</span>
+      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger as asChild>
+        <Avatar className="bg-black">
+        <AvatarFallback className="bg-black text-white font-extrabold">
+             {user?.userName[0].toUpperCase()}
+            </AvatarFallback>
+        </Avatar>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent side="right" className="w-56">
+        <DropdownMenuLabel>Logged in as {user.userName}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => navigate("/customers/cusaccounts")}>
+        <UserCheck className="mr-2 h-4 w-4"/>
+        Account
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={handleLogout}>
+        <LogOut className="mr-2 h-4 w-4" />
+        Logout
+        </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
-}
+};
 
 const CustomerMheader = () => {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated,user } = useSelector((state) => state.auth);
+  console.log(user,"Adnan");
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
-    <div className="flex h-16 items-center justify-between px-4 md:px-6">
-      <Link to="/customers/cushome" className="flex items-center gap-2">
-        <HousePlug className="h-6 w-6" />
-        <span className="font-bold">Adnan's Shopping House</span>
-      </Link>
-      <Sheet>
+      <div className="flex h-16 items-center justify-between px-4 md:px-6">
+        <Link to="/customers/cushome" className="flex items-center gap-2">
+          <HousePlug className="h-6 w-6" />
+          <span className="font-bold">Adnan's Shopping House</span>
+        </Link>
+        <Sheet>
           <SheetTrigger asChild>
             <Button variant="outline" size="icon" className="lg:hidden">
               <Menu className="h-6 w-6" />
@@ -48,19 +84,23 @@ const CustomerMheader = () => {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-full max-w-xs">
-           <MenuItems/>
+            <MenuItems />
+            <HeaderRightContent/>
           </SheetContent>
         </Sheet>
         <div className="hidden lg:block">
           <MenuItems />
         </div>
-
-        <div className="hidden lg:block">
+   
+   <div className="hidden lg:block">
+      <HeaderRightContent />
+      </div> 
+     
+   
         
-        </div>
-    </div>
-  </header>
-  )
-}
+      </div>
+    </header>
+  );
+};
 
 export default CustomerMheader;
