@@ -2,10 +2,10 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 
-const CustomerProductTile = ({ product }) => {
+const CustomerProductTile = ({ product,handleGetProductDetails }) => {
   return(
   <Card className="w-full max-w-sm mx-auto">
-    <div>
+    <div onClick={() => handleGetProductDetails(product?._id)}>
       <div className="relative">
         <img
           src={product?.image}
@@ -34,11 +34,11 @@ const CustomerProductTile = ({ product }) => {
               product?.salePrice > 0 ? "line-through" : ""
             } text-lg font-semibold text-primary`}
           >
-            {product?.price}
+           TK:৳ {product?.price}
           </span>
           {product?.salePrice > 0 ? (
             <span className="text-lg font-semibold text-primary">
-              {product?.salePrice}
+             TK:৳ {product?.salePrice}
             </span>
           ) : null}
         </div>
