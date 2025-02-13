@@ -17,19 +17,13 @@ export const fetchAllFilteredProducts = createAsyncThunk(
       ...filterParams,
       sortBy: sortParams,
     });
-  
-  
     const result = await axios.get(
       `http://localhost:5000/api/customer/products/get?${query}`
     );
-
-    
     console.log(result,"result");
     return result?.data;
   }
 );
-
-
 
 const customerProductSlice = createSlice({
   name: "customerProducts",
