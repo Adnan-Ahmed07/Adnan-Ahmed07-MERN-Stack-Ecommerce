@@ -75,5 +75,5 @@ const customerProductSlice = createSlice({
 });
 
 
-
+export const { setProductDetails } = customerProductSlice.actions;
 export default customerProductSlice.reducer;  
