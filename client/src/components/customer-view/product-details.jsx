@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent } from "../ui/dialog";
 import { Separator } from "../ui/separator";
+import { Input } from "../ui/input";
 
 const ProductDetailsDialog = ({ open, setOpen, productDetails }) => {
   return (
@@ -38,6 +39,16 @@ const ProductDetailsDialog = ({ open, setOpen, productDetails }) => {
               </p>
             ) : null}
           </div>
+          <div className="flex items-center gap-2 mt-2">
+            <div className="flex items-center gap-0.5">
+            <StarIcon className="w-5 h-5 fill-primary" />
+                        <StarIcon className="w-5 h-5 fill-primary" />
+                        <StarIcon className="w-5 h-5 fill-primary" />
+            </div>
+            <span className="text-muted-foreground">
+              (4.5)
+            </span>
+          </div>
           <div className="mt-5 mb-5">
             <Button className="w-full">Add to Cart</Button>
           </div>
@@ -63,6 +74,46 @@ const ProductDetailsDialog = ({ open, setOpen, productDetails }) => {
                       </p>
                 </div>
               </div>
+              <div className="flex gap-4">
+                <Avatar className="w-10 h-10 border">
+                  <AvatarFallback>AD</AvatarFallback>
+                </Avatar>
+                <div className="grid gap-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-bold">Adnan Ahmed</h3>
+                  </div>
+                  <div className="flex items-center gap-0.5">
+                        <StarIcon className="w-5 h-5 fill-primary" />
+                        <StarIcon className="w-5 h-5 fill-primary" />
+                        <StarIcon className="w-5 h-5 fill-primary" />
+                      </div>
+                      <p className="text-muted-foreground">
+                        this is a awosome product men
+                      </p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <Avatar className="w-10 h-10 border">
+                  <AvatarFallback>AD</AvatarFallback>
+                </Avatar>
+                <div className="grid gap-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-bold">Adnan Ahmed</h3>
+                  </div>
+                  <div className="flex items-center gap-0.5">
+                        <StarIcon className="w-5 h-5 fill-primary" />
+                        <StarIcon className="w-5 h-5 fill-primary" />
+                        <StarIcon className="w-5 h-5 fill-primary" />
+                      </div>
+                      <p className="text-muted-foreground">
+                        this is a awosome product men
+                      </p>
+                </div>
+              </div>
+            </div>
+            <div className="mt-6 flex gap-2">
+              <Input placeholder="Write a Review..."/>
+              <Button>Submit</Button>
             </div>
           </div>
         </div>
