@@ -39,7 +39,7 @@ function App() {
 
   return (
    <div className='flex flex-col overflow-hidden bg-white' >
-    <h1>header com is working or not</h1>
+    {/* <h1>header com is working or not</h1> */}
 
    <Routes>
     <Route path="/auth" element={
