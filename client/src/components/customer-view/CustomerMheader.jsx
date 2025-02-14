@@ -8,6 +8,8 @@ import { shoppingViewHeaderMenuItems } from "@/config";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { logoutUser } from "@/store/auth-slice";
+import UserCartWrapper from "./cart-wrapper";
+import { useState } from "react";
 
 const MenuItems = () => {
   return (
@@ -28,6 +30,8 @@ const MenuItems = () => {
 };
 const HeaderRightContent = () => {
   const { user } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.customerCart);
+  const [openCartSheet, setOpenCartSheet] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -36,11 +40,19 @@ const HeaderRightContent = () => {
   }
   return (
     <div className="flex lg:items-center lg:flex-row flex-col gap-4">
-     <Sheet>
-     <Button variant="outline" size="icon">
+     <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
+     <Button onClick={() => setOpenCartSheet(true)} variant="outline" size="icon">
         <ShoppingCart className="w-6 h-6" />
         <span className="sr-only">User cart</span>
       </Button>
+      <UserCartWrapper
+          setOpenCartSheet={setOpenCartSheet}
+          cartItems={
+            cartItems && cartItems.items && cartItems.items.length > 0
+              ? cartItems.items
+              : []
+          }
+        />
      </Sheet>
       <DropdownMenu>
         <DropdownMenuTrigger as asChild>
