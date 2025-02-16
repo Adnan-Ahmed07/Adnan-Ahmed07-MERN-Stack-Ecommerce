@@ -5,6 +5,10 @@ import bannerThre from "../../assets/banner-3s.webp";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllFilteredProducts } from "@/store/customer/products-slice";
+import CustomerProductTile from "@/components/customer-view/product-tile";
+import { useNavigate } from "react-router-dom";
 
 const categoriesWithIcon = [
   { id: "men", label: "Men", icon: ShirtIcon },
@@ -26,12 +30,41 @@ const CustomerHome = () => {
   
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides=[bannerOne,bannerTWO,bannerThre];
+  const { productList, productDetails } = useSelector(
+    (state) => state.customerProducts
+  );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  function handleNavigateToListingPage(getCurrentItem, section) {
+    sessionStorage.removeItem("filters");
+    const currentFilter = {
+      [section]: [getCurrentItem.id],
+    };
+
+    sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+    navigate(`/customers/prlisting`);
+  }
+
+
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-    }, 15000);
+    }, 2000);
     return () => clearInterval(timer);
   }, [slides]);
+
+  useEffect(() => {
+    dispatch(
+      fetchAllFilteredProducts({
+        filterParams: {},
+        sortParams: "price-lowtohigh",
+      })
+    );
+  }, [dispatch]);
+
+console.log(productList,"list");
   return (
     <div className="flex flex-col min-h-screen">
       <div className="relative w-full h-[600px] overflow-hidden">
@@ -82,7 +115,9 @@ const CustomerHome = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {categoriesWithIcon.map((categoryItem) => (
               <Card
-               
+              onClick={() =>
+                handleNavigateToListingPage(categoryItem, "Category")
+              }
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
                 <CardContent className="flex flex-col items-center justify-center p-6">
@@ -100,7 +135,7 @@ const CustomerHome = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {brandsWithIcon.map((brandItem) => (
               <Card
-                
+              onClick={() => handleNavigateToListingPage(brandItem, "Brand")}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
                 <CardContent className="flex flex-col items-center justify-center p-6">
@@ -109,6 +144,24 @@ const CustomerHome = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">
+            Feature Products
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {productList && productList.length > 0
+              ? productList.map((productItem) => (
+                  <CustomerProductTile
+                    // handleGetProductDetails={handleGetProductDetails}
+                    product={productItem}
+                    // handleAddtoCart={handleAddtoCart}
+                  />
+                ))
+              : null}
           </div>
         </div>
       </section>
