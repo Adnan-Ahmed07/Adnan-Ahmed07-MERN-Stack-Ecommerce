@@ -140,7 +140,7 @@ export const shoppingViewHeaderMenuItems = [
     path: "/shop/search",
   },
 ];
-export const categoryOptionsMap = {
+export const CategoryOptionsMap = {
   men: "Men",
   women: "Women",
   kids: "Kids",
@@ -148,7 +148,7 @@ export const categoryOptionsMap = {
   footwear: "Footwear",
 };
 
-export const brandOptionsMap = {
+export const BrandOptionsMap = {
   nike: "Nike",
   adidas: "Adidas",
   puma: "Puma",

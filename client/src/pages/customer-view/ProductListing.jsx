@@ -71,7 +71,7 @@ const ProductListing = () => {
     sessionStorage.setItem("filters", JSON.stringify(cpyFilters));
   }
   function handleGetProductDetails(getCurrentProductId) {
-    console.log(getCurrentProductId);
+    
     dispatch(fetchProductDetails(getCurrentProductId));
   }
 
