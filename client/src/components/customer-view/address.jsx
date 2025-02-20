@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import CommonForm from "../common/form";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewAddress, deleteAddress, fetchAllAddresses } from "@/store/customer/address-slice";
+import { addNewAddress, deleteAddress, editaAddress, fetchAllAddresses } from "@/store/customer/address-slice";
 import { useToast } from "@/hooks/use-toast";
 import AddressCard from "./address-card";
 const initialAddressFormData = {
@@ -16,6 +16,7 @@ const initialAddressFormData = {
 };
 const Address=()=>{
   const [formData, setFormData] = useState(initialAddressFormData);
+  const [currentEditedId, setCurrentEditedId] = useState(null);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { addressList } = useSelector((state) => state.customerAddress);
@@ -23,6 +24,33 @@ const Address=()=>{
   function handleManageAddress(event) {
     event.preventDefault();
 
+    if (addressList.length >= 3 && currentEditedId === null) {
+      setFormData(initialAddressFormData);
+      toast({
+        title: "You can add max 3 addresses",
+        variant: "destructive",
+      });
+
+      return;
+    }
+    currentEditedId !== null
+    ? dispatch(
+        editaAddress({
+          userId: user?.id,
+          addressId: currentEditedId,
+          formData,
+        })
+      ).then((data) => {
+        if (data?.payload?.success) {
+          dispatch(fetchAllAddresses(user?.id));
+          setCurrentEditedId(null);
+          setFormData(initialAddressFormData);
+          toast({
+            title: "Address updated successfully",
+          });
+        }
+      })
+    :
     dispatch(
       addNewAddress({
         ...formData,
@@ -51,7 +79,17 @@ const Address=()=>{
       }
     });
   }
-
+  function handleEditAddress(getCuurentAddress) {
+    setCurrentEditedId(getCuurentAddress?._id);
+    setFormData({
+      ...formData,
+      address: getCuurentAddress?.address,
+      city: getCuurentAddress?.city,
+      phone: getCuurentAddress?.phone,
+      pincode: getCuurentAddress?.pincode,
+      notes: getCuurentAddress?.notes,
+    });
+  }
   function isFormValid() {
     return Object.keys(formData)
       .map((key) => formData[key].trim() !== "")
@@ -69,6 +107,8 @@ const Address=()=>{
               <AddressCard
               handleDeleteAddress={handleDeleteAddress}
                 addressInfo={singleAddressItem}
+                handleEditAddress={handleEditAddress}
+              
                
               />
             ))
@@ -76,7 +116,7 @@ const Address=()=>{
       </div>
       <CardHeader>
         <CardTitle>
-         Add new Address
+        {currentEditedId !== null ? "Edit Address" : "Add New Address"}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
@@ -84,7 +124,7 @@ const Address=()=>{
           formControls={addressFormControls}
           formData={formData}
           setFormData={setFormData}
-          buttonText={ "Add"}
+          buttonText={currentEditedId !== null ? "Edit" : "Add"}
           onSubmit={handleManageAddress}
           isBtnDisabled={!isFormValid()}
         />
