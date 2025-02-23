@@ -1,8 +1,30 @@
+import { Card, CardHeader, CardTitle } from "../ui/card";
+
 const CustomerOrders = () => {
     return (
-        <div>
-            <h1>Orders</h1>
-        </div>
+        <Card>
+      <CardHeader>
+        <CardTitle>Order History</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Order ID</TableHead>
+              <TableHead>Order Date</TableHead>
+              <TableHead>Order Status</TableHead>
+              <TableHead>Order Price</TableHead>
+              <TableHead>
+                <span className="sr-only">Details</span>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          
+        </Table>
+      </CardContent>
+     </Card>
+    
+     
     );
 };
 export default CustomerOrders;
