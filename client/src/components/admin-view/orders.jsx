@@ -1,8 +1,64 @@
-const AdminOrders = () => {
+import { useState } from "react";
+import { Button } from "../ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Dialog } from "../ui/dialog";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import { useDispatch } from "react-redux";
+import AdminOrdersDetailsView from "./order-deatils";
+
+const AdminOrdersView = () => {
+  const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
+  const dispatch = useDispatch();
     return (
-        <div>
-            <h1>Admin Orders</h1>
-        </div>
+       <Card>
+        <CardHeader>
+            <CardTitle>All Orders</CardTitle>
+        </CardHeader>
+          <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Order ID</TableHead>
+                      <TableHead>Order Date</TableHead>
+                      <TableHead>Order Status</TableHead>
+                      <TableHead>Order Price</TableHead>
+                      <TableHead>
+                        <span className="sr-only">Details</span>
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                  
+                          <TableRow>
+                            <TableCell>123456</TableCell>
+                            <TableCell>27/06/2025</TableCell>
+                            <TableCell>
+                         pending
+                            </TableCell>
+                            <TableCell>$100</TableCell>
+                            <TableCell>
+                            <Dialog  open={openDetailsDialog}
+                        onOpenChange={ 
+                          setOpenDetailsDialog
+                          
+                        }>
+                      <Button
+                              onClick={()=>setOpenDetailsDialog(true)}  
+                                >
+                                  View Details
+                                </Button>
+                                <AdminOrdersDetailsView/>
+                            </Dialog>
+                                
+                            
+                              
+                            </TableCell>
+                          </TableRow>
+                    
+                  </TableBody>
+                </Table>
+              </CardContent>
+       </Card>
     );
 }
-export default AdminOrders;
+export default AdminOrdersView;
