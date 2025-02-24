@@ -5,6 +5,7 @@ import UserCartItemsContent from "@/components/customer-view/cart-items-content"
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { createNewOrder } from "@/store/customer/order-slice";
+import { useToast } from "@/hooks/use-toast";
 
 const CustomerCheckout = () => {
   const { cartItems } = useSelector((state) => state.customerCart);
@@ -13,6 +14,7 @@ const CustomerCheckout = () => {
   const [isPaymentStart, setIsPaymemntStart] = useState(false);
   const { approvalURL } = useSelector((state) => state.customerOrder);
   const dispatch = useDispatch();
+  const { toast } = useToast();
   const totalCartAmount =
   cartItems && cartItems.items && cartItems.items.length > 0
     ? cartItems.items.reduce(
@@ -26,6 +28,22 @@ const CustomerCheckout = () => {
       )
     : 0;
   const handleInitiatePaypalPaymet = () => {
+    if (cartItems.length === 0) {
+      toast({
+        title: "Your cart is empty. Please add items to proceed",
+        variant: "destructive",
+      });
+
+      return;
+    }
+    if (currentSelectedAddress === null) {
+      toast({
+        title: "Please select one address to proceed.",
+        variant: "destructive",
+      });
+
+      return;
+    }
     const orderData = {
       userId:user?.id,
       cartId:cartItems?._id,
