@@ -5,11 +5,11 @@ import { Label } from "../ui/label";
 const AddressCard = ({
   addressInfo,
   handleDeleteAddress,
-  handleEditAddress
+  handleEditAddress,setCurrentSelectedAddress
 }) => {
   return (
     <Card
-    
+    onClick={setCurrentSelectedAddress?()=>setCurrentSelectedAddress(addressInfo):null}
       className="cursor-pointer border-red-700 
         
            border-red-900 border-[4px]"

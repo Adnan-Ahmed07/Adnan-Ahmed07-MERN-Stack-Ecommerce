@@ -22,6 +22,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { checkAuth } from './store/auth-slice'
 import { useEffect } from 'react'
 import { Skeleton } from './components/ui/skeleton'
+import PaypalReturnPage from './pages/customer-view/paypal-retun'
+import PaymentSuccessPage from './pages/customer-view/paymet-success'
+
 
 function App() {
   // const isAuthenticated =false;
@@ -73,6 +76,8 @@ function App() {
       <Route path="prlisting" element={<ProductListing/>}/>
       <Route path="cuscheckout" element={<CustomerCheckout/>}/>
       <Route path="cusaccounts" element={<CustomerAccount/>}/>
+      <Route path="paypal-return" element={<PaypalReturnPage/>}/>
+      <Route path="paypal-success" element={<PaymentSuccessPage/>}/>
     </Route>
     <Route path="/unauth-page" element={<UnAuthPage/>}  />
     <Route path="*" element={<NotFound/>}  />
