@@ -10,6 +10,7 @@ const customerProductsRouter = require("./routes/Customer/products-routes");
 const customercartRouter = require("./routes/Customer/cart-routes");
 const customerAddressRouter = require("./routes/Customer/address-routes");
 const customerOrderRouter = require("./routes/Customer/order-routes");
+const customerSearchRouter = require("./routes/Customer/search-routes");
 mongoose.connect(process.env.API_KEY).then(()=>console.log('MongoDB connected')).catch(err=>console.log(err));
 
 const app=express();
@@ -34,4 +35,5 @@ app.use("/api/customer/products", customerProductsRouter);
 app.use("/api/customer/cart", customercartRouter);
 app.use("/api/customer/address", customerAddressRouter);
 app.use("/api/customer/order", customerOrderRouter);
+app.use("/api/customer/search", customerSearchRouter);
 app.listen(PORT,()=> console.log(`Server is running on port ${PORT}`));
