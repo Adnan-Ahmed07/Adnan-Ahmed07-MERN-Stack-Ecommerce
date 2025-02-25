@@ -2,17 +2,30 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Dialog } from "../ui/dialog";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table";
 import CustomerOrderDetailsView from "./order-details";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOrdersByUserId, getOrderDetails,resetOrderDetails } from "@/store/customer/order-slice";
+import {
+  getAllOrdersByUserId,
+  getOrderDetails,
+  resetOrderDetails,
+} from "@/store/customer/order-slice";
 import { Badge } from "../ui/badge";
 
 const CustomerOrders = () => {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { orderList, orderDetails } = useSelector((state) => state.customerOrder);
+  const { orderList, orderDetails } = useSelector(
+    (state) => state.customerOrder
+  );
   function handleFetchOrderDetails(getId) {
     dispatch(getOrderDetails(getId));
   }
@@ -25,8 +38,8 @@ const CustomerOrders = () => {
     if (orderDetails !== null) setOpenDetailsDialog(true);
   }, [orderDetails]);
   console.log(orderDetails, "orderDetails");
-    return (
-      <Card>
+  return (
+    <Card>
       <CardHeader>
         <CardTitle>Order History</CardTitle>
       </CardHeader>
@@ -53,10 +66,12 @@ const CustomerOrders = () => {
                       <Badge
                         className={`py-1 px-3 ${
                           orderItem?.orderStatus === "confirmed"
-                            ? "bg-green-500"
-                            : orderItem?.orderStatus === "rejected"
-                            ? "bg-red-600"
-                            : "bg-black"
+                          ? "bg-green-500"
+                          : orderItem?.orderStatus === "rejected"
+                          ? "bg-red-600"
+                          : orderItem?.orderStatus === "delivered"
+                          ? "bg-pink-500"
+                          : "bg-black"
                         }`}
                       >
                         {orderItem?.orderStatus}
@@ -88,8 +103,6 @@ const CustomerOrders = () => {
         </Table>
       </CardContent>
     </Card>
-    
-     
-    );
+  );
 };
 export default CustomerOrders;

@@ -45,6 +45,7 @@ const ProductListing = () => {
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
+  const categorySearchParam = searchParams.get("category");
   const { toast } = useToast();
   function handleSort(value) {
     setSort(value);
@@ -95,7 +96,7 @@ const ProductListing = () => {
   useEffect(() => {
     setSort("price-lowtohigh");
     setFilters(JSON.parse(sessionStorage.getItem("filters")) || {});
-  }, []);
+  }, [categorySearchParam ]);
   useEffect(() => {
     if (filters && Object.keys(filters).length > 0) {
       const createQueryString = createSearchParamsHelper(filters);
@@ -112,7 +113,7 @@ const ProductListing = () => {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
 
-  console.log(cartItems, "chole ki ha");
+  
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">

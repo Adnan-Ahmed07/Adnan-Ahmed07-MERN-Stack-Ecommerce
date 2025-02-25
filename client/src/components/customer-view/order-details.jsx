@@ -1,4 +1,3 @@
-
 import { useSelector } from "react-redux";
 import { Badge } from "../ui/badge";
 import { DialogContent } from "../ui/dialog";
@@ -7,7 +6,7 @@ import { Separator } from "../ui/separator";
 
 const CustomerOrderDetailsView = ({ orderDetails }) => {
   const { user } = useSelector((state) => state.auth);
-  return(
+  return (
     <DialogContent className="sm:max-w-[600px]">
       <div className="grid gap-6">
         <div className="grid gap-2">
@@ -37,10 +36,12 @@ const CustomerOrderDetailsView = ({ orderDetails }) => {
               <Badge
                 className={`py-1 px-3 ${
                   orderDetails?.orderStatus === "confirmed"
-                    ? "bg-green-500"
-                    : orderDetails?.orderStatus === "rejected"
-                    ? "bg-red-600"
-                    : "bg-black"
+                  ? "bg-green-500"
+                  : orderDetails?.orderStatus === "rejected"
+                  ? "bg-red-600"
+                  : orderDetails?.orderStatus === "delivered"
+                  ? "bg-pink-500"
+                  : "bg-black"
                 }`}
               >
                 {orderDetails?.orderStatus}
@@ -80,7 +81,6 @@ const CustomerOrderDetailsView = ({ orderDetails }) => {
         </div>
       </div>
     </DialogContent>
-
   );
-}
+};
 export default CustomerOrderDetailsView;
