@@ -81,12 +81,23 @@ const ProductDetailsDialog = ({ open, setOpen, productDetails }) => {
             </span>
           </div>
           <div className="mt-5 mb-5">
-            <Button className="w-full" onClick={() =>
+          {productDetails?.totalStock === 0 ? (
+              <Button className="w-full opacity-60 cursor-not-allowed">
+                Out of Stock
+              </Button>
+            ) : (
+              <Button
+                className="w-full"
+                onClick={() =>
                   handleAddToCart(
                     productDetails?._id,
                     productDetails?.totalStock
                   )
-                }>Add to Cart</Button>
+                }
+              >
+                Add to Cart
+              </Button>
+              )}
           </div>
           <Separator />
           <div className="max-h-[300px] overflow-auto">
