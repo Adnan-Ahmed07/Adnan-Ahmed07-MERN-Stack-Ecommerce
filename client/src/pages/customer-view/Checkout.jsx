@@ -113,7 +113,7 @@ const CustomerCheckout = () => {
         </div>
         <div className="mt-4 w-full">
           <Button onClick={handleInitiatePaypalPaymet} className="w-full">
-           pay
+           Pay With PayPal
           </Button>
         </div>
       </div>

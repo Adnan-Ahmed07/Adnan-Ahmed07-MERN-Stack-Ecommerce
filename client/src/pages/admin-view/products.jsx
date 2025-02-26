@@ -144,7 +144,7 @@ const AdminProducts = () => {
               setFormData={setFormData}
               buttonText={currentEditedId !== null ? "Edit" : "Add"}
               formControls={addProductFormElements}
-              isBtnDisabled={!isFormValid()}
+              // isBtnDisabled={!isFormValid()}
             />
           </div>
         </SheetContent>

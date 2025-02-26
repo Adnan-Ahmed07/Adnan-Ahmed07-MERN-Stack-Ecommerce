@@ -42,11 +42,11 @@ const CustomerProductTile = ({ product,handleGetProductDetails, handleAddtoCart,
               product?.salePrice > 0 ? "line-through" : ""
             } text-lg font-semibold text-primary`}
           >
-           TK:৳ {product?.price}
+          $ {product?.price}
           </span>
           {product?.salePrice > 0 ? (
             <span className="text-lg font-semibold text-primary">
-             TK:৳ {product?.salePrice}
+            $ {product?.salePrice}
             </span>
           ) : null}
         </div>
