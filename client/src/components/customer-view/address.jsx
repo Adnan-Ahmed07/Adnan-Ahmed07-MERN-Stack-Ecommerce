@@ -14,13 +14,14 @@ const initialAddressFormData = {
   pincode: "",
   notes: "",
 };
-const Address=({setCurrentSelectedAddress})=>{
+const Address=({setCurrentSelectedAddress,selectedId})=>{
   const [formData, setFormData] = useState(initialAddressFormData);
   const [currentEditedId, setCurrentEditedId] = useState(null);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { addressList } = useSelector((state) => state.customerAddress);
   const { toast } = useToast();
+  
   function handleManageAddress(event) {
     event.preventDefault();
 
@@ -105,10 +106,12 @@ const Address=({setCurrentSelectedAddress})=>{
       {addressList && addressList.length > 0
           ? addressList.map((singleAddressItem) => (
               <AddressCard
+              selectedId={selectedId}
               handleDeleteAddress={handleDeleteAddress}
                 addressInfo={singleAddressItem}
                 handleEditAddress={handleEditAddress}
                 setCurrentSelectedAddress={setCurrentSelectedAddress}
+                
                
               />
             ))

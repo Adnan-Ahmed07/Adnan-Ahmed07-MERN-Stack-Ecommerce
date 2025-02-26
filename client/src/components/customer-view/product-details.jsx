@@ -1,4 +1,4 @@
-import { StarIcon } from "lucide-react";
+
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent } from "../ui/dialog";
@@ -21,6 +21,7 @@ const ProductDetailsDialog = ({ open, setOpen, productDetails }) => {
   const { toast } = useToast();
   const { cartItems } = useSelector((state) => state.customerCart);
   const { reviews } = useSelector((state) => state.crReview);
+  
 
   function handleRatingChange(getRating) {
     console.log(getRating, "getRating");

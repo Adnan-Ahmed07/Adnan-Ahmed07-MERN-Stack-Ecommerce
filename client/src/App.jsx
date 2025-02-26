@@ -46,6 +46,11 @@ function App() {
     {/* <h1>header com is working or not</h1> */}
 
    <Routes>
+    <Route path="/" element={
+     <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+      </CheckAuth>
+} />
+
     <Route path="/auth" element={
      <CheckAuth isAuthenticated={isAuthenticated} user={user}>
       <AuthLayout/>
