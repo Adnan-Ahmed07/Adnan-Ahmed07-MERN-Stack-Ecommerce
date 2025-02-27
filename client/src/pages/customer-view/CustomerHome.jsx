@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/customer/cart-slice";
 import { useToast } from "@/hooks/use-toast";
 import ProductDetailsDialog from "@/components/customer-view/product-details";
+import { getFeatureImages } from "@/store/common-slice";
 
 const CategoriesWithIcon = [
   { id: "men", label: "Men", icon: ShirtIcon },
@@ -32,7 +33,8 @@ const BrandsWithIcon = [
 const CustomerHome = () => {
   
   const [currentSlide, setCurrentSlide] = useState(0);
-  
+  const { featureImageList } = useSelector((state) => state.commonFeature);
+
   const slides=[bannerOne,bannerTWO,bannerThre];
   const { productList, productDetails } = useSelector(
     (state) => state.customerProducts
@@ -74,12 +76,13 @@ const CustomerHome = () => {
       });
     }
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-    }, 2000);
-    return () => clearInterval(timer);
-  }, [slides]);
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImageList.length);
+      }, 4000);
+  
+      return () => clearInterval(timer);
+    }, [featureImageList]);
 
   useEffect(() => {
     dispatch(
@@ -92,37 +95,38 @@ const CustomerHome = () => {
   useEffect(() => {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
-
+ useEffect(() => {
+    dispatch(getFeatureImages());
+  }, [dispatch])
 console.log(productList,"list");
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="relative w-full h-[600px] overflow-hidden">
-        { 
-          slides.map((slide,index)=><img
-          
-          src={slide}
-          key={index}
-          className={`${
-            index === currentSlide ? "opacity-100" : "opacity-0"
-          } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
-          />
-
+    <div className="relative w-full h-[600px] overflow-hidden">
+      {featureImageList && featureImageList.length > 0
+        ? featureImageList.map((slide, index) => (
+            <img
+              src={slide?.image}
+              key={index}
+              className={`${
+                index === currentSlide ? "opacity-100" : "opacity-0"
+              } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
+            />
+          ))
+        : null}
+      <Button
+        variant="outline"
+        size="icon"
+        onClick={() =>
+          setCurrentSlide(
+            (prevSlide) =>
+              (prevSlide - 1 + featureImageList.length) %
+              featureImageList.length
           )
         }
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() =>
-            setCurrentSlide(
-              (prevSlide) =>
-                (prevSlide - 1 + slides.length) %
-                slides.length
-            )
-          }
-          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80"
-        >
-          <ChevronLeftIcon className="w-4 h-4" />
-        </Button>
+        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80"
+      >
+        <ChevronLeftIcon className="w-4 h-4" />
+      </Button>
         <Button
           variant="outline"
           size="icon"

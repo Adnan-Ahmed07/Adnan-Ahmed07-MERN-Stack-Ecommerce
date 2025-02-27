@@ -12,6 +12,7 @@ const customerAddressRouter = require("./routes/Customer/address-routes");
 const customerOrderRouter = require("./routes/Customer/order-routes");
 const customerSearchRouter = require("./routes/Customer/search-routes");
 const customerReviewRouter = require("./routes/Customer/review-routes");
+const commonFeatureRouter = require("./routes/Common/feature-routes");
 mongoose.connect(process.env.API_KEY).then(()=>console.log('MongoDB connected')).catch(err=>console.log(err));
 
 const app=express();
@@ -38,4 +39,5 @@ app.use("/api/customer/address", customerAddressRouter);
 app.use("/api/customer/order", customerOrderRouter);
 app.use("/api/customer/search", customerSearchRouter);
 app.use("/api/customer/review", customerReviewRouter);
+app.use("/api/common/feature", commonFeatureRouter);
 app.listen(PORT,()=> console.log(`Server is running on port ${PORT}`));
