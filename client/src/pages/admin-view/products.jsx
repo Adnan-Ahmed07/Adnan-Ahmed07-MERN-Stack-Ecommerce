@@ -18,7 +18,7 @@ const initialFormData = {
   image: null,
   title: "",
   description: "",
-  category: "",
+  Category: "",
   brand: "",
   price: "",
   salePrice: "",

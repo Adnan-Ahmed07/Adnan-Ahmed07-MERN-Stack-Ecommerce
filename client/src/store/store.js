@@ -9,6 +9,7 @@ import CustomerOrderSlice from "./customer/order-slice"
 import SearchSlice from "./customer/search-slice";
 import customerReviewSlice from "./customer/review-slice";
 import commonFeatureSlice from "./common-slice";
+import incomeReducer from "./admin/income-slice";
 const store=configureStore({ 
    
   reducer:{
@@ -23,6 +24,7 @@ const store=configureStore({
     crReview:customerReviewSlice,
     
     commonFeature: commonFeatureSlice,
+    income: incomeReducer
   }
 
 })

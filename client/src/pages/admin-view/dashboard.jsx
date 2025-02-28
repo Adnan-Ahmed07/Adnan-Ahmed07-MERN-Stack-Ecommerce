@@ -1,4 +1,6 @@
 import ProductImageUpload from "@/components/admin-view/image-upload";
+import IncomeChart from "@/components/admin-view/income-chart";
+
 import { Button } from "@/components/ui/button";
 import { 
   addFeatureImage, 
@@ -40,7 +42,9 @@ const AdminDashboard = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-6">Manage Feature Images</h1>
-      
+      <div className="mt-8">
+        <IncomeChart />
+      </div>
       {/* Image Upload Section */}
       <div className="bg-white p-6 rounded-lg shadow-md mb-8">
         <ProductImageUpload
