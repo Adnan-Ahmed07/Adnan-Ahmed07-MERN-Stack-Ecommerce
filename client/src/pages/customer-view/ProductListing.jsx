@@ -45,7 +45,7 @@ const ProductListing = () => {
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
-  const categorySearchParam = searchParams.get("category");
+  const categorySearchParam = searchParams.get("Category");
   const { toast } = useToast();
   function handleSort(value) {
     setSort(value);

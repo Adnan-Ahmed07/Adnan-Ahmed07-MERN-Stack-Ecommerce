@@ -32,7 +32,7 @@ const MenuItems = () => {
 
     location.pathname.includes("prlisting") && currentFilter !== null
       ? setSearchParams(
-          new URLSearchParams(`?category=${getCurrentMenuItem.id}`)
+          new URLSearchParams(`?Category=${getCurrentMenuItem.id}`)
         )
       : navigate(getCurrentMenuItem.path);
   }
