@@ -1,8 +1,8 @@
 const axios = require("axios");
 
-const PAYPAL_CLIENT_ID = "Afv76t1dghmLikey4BzL4_2ORLtFbjGKJvDnXTyTRRDklUNb5_Nml_93xO-wPnaWJSlzHKH7JG6371U-";
-const PAYPAL_CLIENT_SECRET = "EPXI54a4M5wmOjRL0qnoIWdsiJTX4GUs33ROeupzG4o-zU6th-Y14cb60cCyWtjocmAFd1tgkVTiGAvX";
-const PAYPAL_API_BASE = "https://api.sandbox.paypal.com"; // Use "https://api.paypal.com" for production
+const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_IDS;
+const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRETS;
+const PAYPAL_API_BASE = process.env.PAYPAL_API_BASES; // Use "https://api.paypal.com" for production
 
 // Get PayPal OAuth 2.0 access token
 const getAccessToken = async () => {
